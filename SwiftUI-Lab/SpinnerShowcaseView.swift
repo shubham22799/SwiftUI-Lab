@@ -1,6 +1,6 @@
 //
 //  SpinnerShowcaseView.swift
-//  PortfolioApp
+//  SwiftUI-Lab
 //
 //  Created by Shubham on 17/08/25.
 //

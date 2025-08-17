@@ -1,7 +1,7 @@
-# SwiftUI-Lab SDK - Complete Summary for Android Development
+# SwiftUI-Lab - Complete Summary for Android Development
 
 ## App Overview
-**SwiftUI-Lab SDK** is a comprehensive iOS application built with SwiftUI that showcases various UI/UX components and design patterns. The app serves as a portfolio demonstration of frontend development skills, featuring multiple component categories with interactive previews and real-time customization options.
+**SwiftUI-Lab** is a comprehensive iOS application built with SwiftUI that showcases various UI/UX components and design patterns. The app serves as a portfolio demonstration of frontend development skills, featuring multiple component categories with interactive previews and real-time customization options.
 
 ## Core Architecture
 
@@ -14,9 +14,9 @@
 
 ### Project Structure
 ```
-SwiftUI-Lab-SDK/
-├── SwiftUI-Lab-SDK/
-│   ├── SwiftUILabSDKApp.swift (Main App Entry)
+SwiftUI-Lab/
+├── SwiftUI-Lab/
+│   ├── SwiftUI-LabApp.swift (Main App Entry)
 │   ├── ContentView.swift (Root Navigation)
 │   ├── ComponentLibrary.swift (Component Factory & Categories)
 │   ├── ComponentCategoryCard.swift (Category Display Cards)

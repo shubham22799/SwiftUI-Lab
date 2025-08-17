@@ -1,24 +1,24 @@
 //
-//  DataVisualizationView.swift
-//  PortfolioApp
+//  ButtonShowcaseView.swift
+//  SwiftUI-Lab
 //
 //  Created by Shubham on 17/08/25.
 //
 
 import SwiftUI
 
-// MARK: - Data Visualization Showcase View
-struct DataVisualizationView: View {
+// MARK: - Button Showcase View
+struct ButtonShowcaseView: View {
     @Environment(\.dismiss) private var dismiss
     
-    @State private var selectedChart: ChartType = .bar
-    @State private var chartSize: Double = 200
+    @State private var selectedButton: ButtonType = .gradient
+    @State private var size: Double = 120
+    @State private var cornerRadius: Double = 12
     @State private var primaryColor: Color = .blue
-    @State private var secondaryColor: Color = .green
-    @State private var accentColor: Color = .orange
+    @State private var secondaryColor: Color = .purple
+    @State private var isEnabled: Bool = true
     @State private var isAnimating: Bool = true
-    @State private var dataPoints: Double = 5
-    @State private var animationSpeed: Double = 1.0
+    @State private var buttonText: String = "Tap Me!"
     
     var body: some View {
         VStack(spacing: 0) {
@@ -32,16 +32,16 @@ struct DataVisualizationView: View {
                 
                 Spacer()
                 
-                Text("Data Visualization")
+                Text("Interactive Buttons")
                     .font(.title2)
                     .fontWeight(.bold)
                 
                 Spacer()
                 
-                Button(action: { isAnimating.toggle() }) {
-                    Image(systemName: isAnimating ? "pause.fill" : "play.fill")
+                Button(action: { isEnabled.toggle() }) {
+                    Image(systemName: isEnabled ? "checkmark.circle.fill" : "xmark.circle.fill")
                         .font(.title3)
-                        .foregroundStyle(.primary)
+                        .foregroundStyle(isEnabled ? .green : .red)
                 }
             }
             .padding(.horizontal)
@@ -50,36 +50,33 @@ struct DataVisualizationView: View {
             
             // Top Half - Preview Area (takes maximum space)
             VStack(spacing: 16) {
-                // Chart Preview
+                // Button Preview
                 ZStack {
                     RoundedRectangle(cornerRadius: 16)
                         .fill(.ultraThinMaterial)
                     
-                    ChartFactory.createChart(
-                        type: selectedChart,
-                        size: 200,
+                    ButtonFactory.createButton(
+                        type: selectedButton,
+                        size: size,
                         primaryColor: primaryColor,
                         secondaryColor: secondaryColor,
-                        accentColor: .orange,
-                        dataPoints: Int(dataPoints),
-                        isAnimating: isAnimating,
-                        animationSpeed: 1.0
+                        isEnabled: isEnabled
                     )
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 
-                // Chart Type Grid
+                // Button Type Grid
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Chart Types")
+                    Text("Button Types")
                         .font(.headline)
                         .foregroundStyle(.primary)
                     
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: 8) {
-                        ForEach(ChartType.allCases, id: \.self) { type in
-                            ChartTypeCard(
+                        ForEach(ButtonType.allCases, id: \.self) { type in
+                            ButtonTypeCard(
                                 type: type,
-                                isSelected: selectedChart == type,
-                                action: { selectedChart = type }
+                                isSelected: selectedButton == type,
+                                action: { selectedButton = type }
                             )
                         }
                     }
@@ -97,40 +94,40 @@ struct DataVisualizationView: View {
                 HStack(spacing: 16) {
                     // Left Column - Basic Controls
                     VStack(spacing: 12) {
-                        // Data Points Control
+                        // Size Control
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("Data Points: \(Int(dataPoints))")
+                            Text("Size: \(Int(size))")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                             
                             CustomSlider(
-                                value: $dataPoints,
-                                range: 3...20,
-                                step: 1,
+                                value: $size,
+                                range: 100...300,
+                                step: 10,
                                 tint: .blue
                             )
                         }
                         
-                        // Animation Toggle
+                        // Enabled/Disabled Toggle
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("Animation State")
+                            Text("Button State")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                             
                             HStack {
-                                Text(isAnimating ? "Animating" : "Static")
+                                Text(isEnabled ? "Enabled" : "Disabled")
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
                                 
                                 Spacer()
                                 
-                                Button(action: { isAnimating.toggle() }) {
-                                    Text(isAnimating ? "Stop" : "Start")
+                                Button(action: { isEnabled.toggle() }) {
+                                    Text(isEnabled ? "Disable" : "Enable")
                                         .font(.caption)
                                         .padding(.horizontal, 12)
                                         .padding(.vertical, 6)
-                                        .background(isAnimating ? .red.opacity(0.2) : .green.opacity(0.2))
-                                        .foregroundStyle(isAnimating ? .red : .green)
+                                        .background(isEnabled ? .red.opacity(0.2) : .green.opacity(0.2))
+                                        .foregroundStyle(isEnabled ? .red : .green)
                                         .clipShape(RoundedRectangle(cornerRadius: 8))
                                 }
                             }
@@ -168,7 +165,7 @@ struct DataVisualizationView: View {
         .navigationBarHidden(true)
         .background(
             LinearGradient(
-                colors: [.red.opacity(0.1), .orange.opacity(0.1)],
+                colors: [.green.opacity(0.1), .blue.opacity(0.1)],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
@@ -177,56 +174,53 @@ struct DataVisualizationView: View {
     }
 }
 
-// MARK: - Chart Types
-enum ChartType: CaseIterable {
-    case bar, line, pie, area, radar, scatter
+// MARK: - Button Types
+enum ButtonType: CaseIterable {
+    case gradient, neumorphic, glassmorphism, animated, floating, morphing
     
     var displayName: String {
         switch self {
-        case .bar: return "Bar"
-        case .line: return "Line"
-        case .pie: return "Pie"
-        case .area: return "Area"
-        case .radar: return "Radar"
-        case .scatter: return "Scatter"
+        case .gradient: return "Gradient"
+        case .neumorphic: return "Neumorphic"
+        case .glassmorphism: return "Glass"
+        case .animated: return "Animated"
+        case .floating: return "Floating"
+        case .morphing: return "Morphing"
         }
     }
 }
 
-// MARK: - Chart Factory
-struct ChartFactory {
-    static func createChart(
-        type: ChartType,
+// MARK: - Button Factory
+struct ButtonFactory {
+    static func createButton(
+        type: ButtonType,
         size: Double,
         primaryColor: Color,
         secondaryColor: Color,
-        accentColor: Color,
-        dataPoints: Int,
-        isAnimating: Bool,
-        animationSpeed: Double
+        isEnabled: Bool
     ) -> some View {
         Group {
             switch type {
-            case .bar:
-                BarChart(size: size, primaryColor: primaryColor, secondaryColor: secondaryColor, dataPoints: dataPoints, isAnimating: isAnimating, animationSpeed: animationSpeed)
-            case .line:
-                LineChart(size: size, primaryColor: primaryColor, secondaryColor: secondaryColor, dataPoints: dataPoints, isAnimating: isAnimating, animationSpeed: animationSpeed)
-            case .pie:
-                PieChart(size: size, primaryColor: primaryColor, secondaryColor: secondaryColor, accentColor: accentColor, dataPoints: dataPoints, isAnimating: isAnimating, animationSpeed: animationSpeed)
-            case .area:
-                AreaChart(size: size, primaryColor: primaryColor, secondaryColor: secondaryColor, dataPoints: dataPoints, isAnimating: isAnimating, animationSpeed: animationSpeed)
-            case .radar:
-                RadarChart(size: size, primaryColor: primaryColor, secondaryColor: secondaryColor, dataPoints: dataPoints, isAnimating: isAnimating, animationSpeed: animationSpeed)
-            case .scatter:
-                ScatterChart(size: size, primaryColor: primaryColor, secondaryColor: secondaryColor, dataPoints: dataPoints, isAnimating: isAnimating, animationSpeed: animationSpeed)
+            case .gradient:
+                GradientButton(size: size, primaryColor: primaryColor, secondaryColor: secondaryColor, cornerRadius: 12, text: "Tap Me!", isAnimating: true)
+            case .neumorphic:
+                NeumorphicButton(size: size, primaryColor: primaryColor, cornerRadius: 12, text: "Tap Me!", isAnimating: true)
+            case .glassmorphism:
+                GlassmorphicButton(size: size, primaryColor: primaryColor, secondaryColor: secondaryColor, cornerRadius: 12, text: "Tap Me!", isAnimating: true)
+            case .animated:
+                AnimatedButton(size: size, primaryColor: primaryColor, cornerRadius: 12, text: "Tap Me!", isAnimating: true)
+            case .floating:
+                FloatingButton(size: size, primaryColor: primaryColor, cornerRadius: 12, text: "Tap Me!", isAnimating: true)
+            case .morphing:
+                MorphingButton(size: size, primaryColor: primaryColor, secondaryColor: secondaryColor, cornerRadius: 12, text: "Tap Me!", isAnimating: true)
             }
         }
     }
 }
 
-// MARK: - Chart Type Card
-struct ChartTypeCard: View {
-    let type: ChartType
+// MARK: - Button Type Card
+struct ButtonTypeCard: View {
+    let type: ButtonType
     let isSelected: Bool
     let action: () -> Void
     
@@ -242,9 +236,11 @@ struct ChartTypeCard: View {
             .padding(.vertical, 8)
             .background(
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(isSelected ? .red : Color(.systemGray6))
+                    .fill(isSelected ? .blue : Color(.systemGray6))
             )
         }
         .buttonStyle(PlainButtonStyle())
     }
 }
+
+

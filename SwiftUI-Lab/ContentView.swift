@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  SwiftUI-Lab SDK
+//  SwiftUI-Lab
 //
 //  Created by Shubham on 17/08/25.
 //
@@ -29,7 +29,7 @@ struct ContentView: View {
                         .font(.system(size: 60))
                         .foregroundStyle(.purple.gradient)
                     
-                    Text("SwiftUI-Lab SDK")
+                    Text("SwiftUI-Lab")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .multilineTextAlignment(.center)

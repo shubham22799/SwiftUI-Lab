@@ -1,4 +1,4 @@
-# SwiftUI-Lab SDK
+# SwiftUI-Lab
 
 A comprehensive iOS application showcasing various custom UI components built with SwiftUI. This project serves as both a portfolio demonstration and a practical reference for modern iOS development patterns.
 
@@ -37,16 +37,16 @@ A comprehensive iOS application showcasing various custom UI components built wi
 ## 🚀 Getting Started
 
 1. Clone the repository
-2. Open `SwiftUI-Lab-SDK.xcodeproj` in Xcode
+2. Open `SwiftUI-Lab.xcodeproj` in Xcode
 3. Select your target device or simulator
 4. Build and run the project
 
 ## 🏗 Project Structure
 
 ```
-SwiftUI-Lab-SDK/
-├── SwiftUI-Lab-SDK/
-│   ├── SwiftUILabSDKApp.swift (Main App Entry)
+SwiftUI-Lab/
+├── SwiftUI-Lab/
+│   ├── SwiftUI-LabApp.swift (Main App Entry)
 │   ├── ContentView.swift (Root Navigation)
 │   ├── ComponentLibrary.swift (Component Factory & Categories)
 │   ├── ComponentCategoryCard.swift (Category Display Cards)
